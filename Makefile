@@ -7,7 +7,7 @@ SRCS	=	$(addprefix ./srcs/, ft_builtin1.c ft_error.c ft_exp_list.c ft_ftfunc.c f
 								ft_utils_parse.c ft_redir_expand.c ft_split.c ft_unset.c ft_clear.c ft_exit.c ft_fd.c \
 								ft_get.c ft_heredoc2.c ft_minishell.c ft_path_functions.c ft_str.c ft_small_stuff2.c)
 ifeq ($(LOGNAME), tcharvet)
-	LIB		=	-L/Users/tcharvet/.brew/Cellar/readline/8.1.1/lib -L. -lreadline
+	LIB		=	-L/Users/tcharvet/.brew/Cellar/readline/8.1.1/lib -lreadline
 	INC		=	-I./inc -I/Users/tcharvet/.brew/Cellar/readline/8.1.1/include
 else
     LIB		=	-lreadline
@@ -21,7 +21,7 @@ all:	$(NAME)
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 $(NAME):	$(OBJS) $(OBJSUTILS)
-	$(CC) $(CFLAGS) $(OBJS) -lreadline $(OBJSUTILS) -o $(NAME)
+	$(CC) $(CFLAGS) $(INC) $(OBJS) -o $(NAME) $(LIB)
 
 clean:
 	rm -rf $(OBJS)
