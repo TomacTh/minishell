@@ -6,22 +6,11 @@
 /*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 19:22:19 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/18 19:31:19 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:33:03 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"ft_minishell.h"
-
-void	fil_str(char *str, size_t num, char *base)
-{
-	while (num >= (size_t)10)
-	{
-		*str = base[num % 10];
-		--str;
-		num /= 10;
-	}
-	*str = base[num % 10];
-}
 
 size_t	udecimal_size(size_t n)
 {

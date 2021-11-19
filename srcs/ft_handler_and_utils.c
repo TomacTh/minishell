@@ -6,7 +6,7 @@
 /*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 18:39:26 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/18 18:42:49 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:56:20 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ctrlc_handler(int num)
 {
 	(void)num;
-	g_data.exit_status = 1;
 	if (g_data.nonewline)
 	{
 		if (g_data.line.str_line)
@@ -26,7 +25,10 @@ void	ctrlc_handler(int num)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	if (!g_data.line.word_list)
+	{
+		g_data.exit_status = 1;
 		rl_redisplay();
+	}
 }
 
 void	hdoc_handler(int num)

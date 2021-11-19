@@ -6,11 +6,31 @@
 /*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 18:59:18 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/18 19:07:06 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:11:54 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
+
+t_builtin_t	is_builtin_or_not(char *str)
+{
+	if (!ft_strcmp(str, "env"))
+		return (env_f);
+	else if (!ft_strcmp(str, "export"))
+		return (export_f);
+	else if (!ft_strcmp(str, "exit"))
+		return (exit_f);
+	else if (!ft_strcmp(str, "cd"))
+		return (cd_f);
+	else if (!ft_strcmp(str, "unset"))
+		return (unset_f);
+	else if (!ft_strcmp(str, "echo"))
+		return (echo_f);
+	else if (!ft_strcmp(str, "pwd"))
+		return (pwd_f);
+	else
+		return (not);
+}
 
 void	ft_builtin(
 	char **argv, size_t count, t_exp_list **alst, t_builtin_t type)

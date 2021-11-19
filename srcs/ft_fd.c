@@ -6,7 +6,7 @@
 /*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 18:22:46 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/18 18:29:41 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:33:29 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	open_filename_fd(t_command *command, char *buffer, t_subtype redir)
 		switch_fd(newfd, &command->in);
 	return (0);
 }
-
 
 void	dup_fd(t_line *line, t_command *command)
 {

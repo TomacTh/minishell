@@ -6,7 +6,7 @@
 /*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 17:46:51 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/19 00:28:09 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:34:09 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,9 @@ char	*search_str(t_exp_list *list, char *key)
 	return (NULL);
 }
 
-
 void	close_after_fork(t_line *line, t_command *command)
 {
 	close_fd(&line->pipe_fd[1]);
 	close_fd(&command->in);
 	close_fd(&command->out);
 }
-

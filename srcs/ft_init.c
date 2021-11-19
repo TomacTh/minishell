@@ -6,7 +6,7 @@
 /*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 00:15:36 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/19 00:19:22 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:33:47 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	init_myenv(char **envp, char ***myenv)
 	return (0);
 }
 
-
 void	init_export_list(char **myenv, t_exp_list **list)
 {
 	int			i;
@@ -95,4 +94,15 @@ void	init(char **envp)
 	init_export_list(g_data.myenv, &g_data.exp_list);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, ctrlc_handler);
+}
+
+void	fil_str(char *str, size_t num, char *base)
+{
+	while (num >= (size_t)10)
+	{
+		*str = base[num % 10];
+		--str;
+		num /= 10;
+	}
+	*str = base[num % 10];
 }
