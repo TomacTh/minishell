@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 12:14:17 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/19 12:14:55 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/19 19:12:51 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,19 @@ t_exp_list *pwd_el, char *buf, char *good_val)
 	}
 }
 
-void	update_pwd(t_exp_list *pwd_el, char *buf)
+void	update_pwd(t_exp_list *pwd_el)
 {
 	char	*fullstr;
 	char	*value;
+	char	buf[4096];
 
 	if (pwd_el)
 	{
-		if (!buf)
+		if (!getcwd(buf, 4095))
 		{
-			ft_error(NULL, "updategetcwd");
+			builtin_error("cd", "error",
+				"getcwd: cannot access parent directories: ");
+			perror(0);
 			g_data.exit_status = 1;
 			return ;
 		}
@@ -66,6 +69,21 @@ void	update_pwd(t_exp_list *pwd_el, char *buf)
 	}
 }
 
+/* void	handle_previous_dir(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
+{
+	if (!path || (!pwd_el || !pwd_el->value))
+	{
+		builtin_error("cd", "error",
+				"cannot find previous dir");
+		g_data.exit_status = 1;
+		return ;
+	}
+	//if (path)
+	//{
+
+	//}
+} */
+
 void	chdir_check(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
 {
 	char	buf[4096];
@@ -75,7 +93,7 @@ void	chdir_check(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
 	error = 0;
 	if (!getcwd(buf, 4095))
 		error = 1;
-	if (chdir(path) == -1)
+	else if (chdir(path) == -1)
 	{
 		ft_error(NULL, "cd");
 		g_data.exit_status = 1;
@@ -85,8 +103,10 @@ void	chdir_check(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
 		ptr = NULL;
 	else
 		ptr = buf;
+	//if (!ft_strcmp("../", path))
+		//return (handle_previous_dir(argv[1], buf, pwd_el));
 	update_oldpwd(oldpwd_el, pwd_el, ptr, NULL);
-	update_pwd(pwd_el, ptr);
+	update_pwd(pwd_el);
 	update_my_env(&g_data.exp_list);
 }
 
