@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 00:37:58 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/19 00:38:45 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 13:02:10 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void	export_loop(char **argv, size_t count, t_exp_list **alst, int *change)
 			{
 				free(key);
 				update_exp_el(argv[i], value, el, 1);
-				if (!ft_strcmp(el->key, "PATH"))
-					create_update_split_path(&g_data.split_path, el->value);
 			}
+			if (el->key && !ft_strcmp(el->key, "PATH"))
+				create_update_split_path(&g_data.split_path, el->value);
 		}
 		else
 			key_is_not_valid(argv[0], argv[i], key, value);

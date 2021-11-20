@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 12:14:17 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/20 01:24:14 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 14:20:41 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,21 @@ t_exp_list *pwd_el, char *buf, char *good_val)
 	}
 }
 
-void	update_pwd(t_exp_list *pwd_el)
+void	update_pwd(t_exp_list *pwd_el, char *ptr, int res)
 {
 	char	*fullstr;
 	char	*value;
 	char	buf[4096];
 
 	if (pwd_el)
-	{
-		if (!getcwd(buf, 4095))
-		{
-			builtin_error("cd", "error",
-				"getcwd: cannot access parent directories: ");
-			perror(0);
-			return ;
+	{	
+		if (res != 3)
+		{	
+			getcwd(buf, 4095);
+			ptr = buf;
 		}
-		fullstr = ft_strjoin("PWD=", buf);
-		value = ft_strdup(buf);
+		fullstr = ft_strjoin("PWD=", ptr);
+		value = ft_strdup(ptr);
 		if (!value || !value)
 		{
 			free(fullstr);
@@ -68,47 +66,20 @@ void	update_pwd(t_exp_list *pwd_el)
 	}
 }
 
-int		verif_str(char *str)
-{
-	int	countdots;
-
-	countdots = 0;
-	if (*str != '.')
-		return (-1);
-	while(*str && (*str == '.' || *str == '/') && countdots < 3)
-	{
-		if (*str == '.')
-			++countdots;
-		else
-			countdots = 0;
-		str++;
-	}
-	if (*str || countdots > 2)
-		return (-1);
-	return (0);
-}
-
 void	chdir_check(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
 {
-	char	buf[4096];
 	char	*ptr;
-	int		error;
+	int		res;
 
-	error = 0;
-	if (!getcwd(buf, 4095))
-		error = 1;
-	else if (chdir(path) == -1)
-	{
+	res = check_error(path, pwd_el, &ptr);
+	if (res == 1 && chdir(path) == -1)
+	{	
 		ft_error(NULL, "cd");
 		g_data.exit_status = 1;
 		return ;
 	}
-	if (error)
-		ptr = NULL;
-	else
-		ptr = buf;
 	update_oldpwd(oldpwd_el, pwd_el, ptr, NULL);
-	update_pwd(pwd_el);
+	update_pwd(pwd_el, ptr, res);
 	update_my_env(&g_data.exp_list);
 }
 

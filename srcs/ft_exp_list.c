@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exp_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 17:01:41 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/18 17:03:48 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 11:22:34 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_exp_list	*exp_list_new(char *str, char *key, char *value)
 	return (new);
 }
 
-void	new_exp_el(char *str, char *key, char *value, t_exp_list **alst)
+t_exp_list	*new_exp_el(char *str, char *key, char *value, t_exp_list **alst)
 {
 	t_exp_list	*new;
 	char		*full_str;
@@ -65,6 +65,7 @@ void	new_exp_el(char *str, char *key, char *value, t_exp_list **alst)
 		ft_quit(1, 0, "malloc error");
 	new = exp_list_new(full_str, key, value);
 	add_exp_to_list(new, alst);
+	return (new);
 }
 
 t_exp_list	*search_el(t_exp_list *list, char *key)

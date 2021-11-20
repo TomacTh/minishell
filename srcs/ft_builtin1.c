@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 18:59:18 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/19 12:11:54 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 14:12:53 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_builtin(
 	else if (type == cd_f)
 		ft_cd(argv, count, alst);
 	else if (type == pwd_f)
-		ft_pwd();
+		ft_pwd(alst);
 }
 
 int	ft_env(char **envp)
@@ -93,16 +93,25 @@ void	ft_echo(char **argv, size_t count)
 	g_data.exit_status = 0;
 }
 
-void	ft_pwd(void)
+void	ft_pwd(t_exp_list **alst)
 {
-	char	buf[4096];
+	char		buf[4096];
+	t_exp_list	*pwd_el;
 
 	g_data.exit_status = 0;
-	if (!getcwd(buf, 4095))
-	{
-		ft_error(NULL, "pwd");
+	pwd_el = NULL;
+	g_data.exit_status = 0;
+	if (getcwd(buf, 4095))
+	{	
+		printf("%s\n", buf);
+		return ;
+	}
+	pwd_el = search_el(*alst, "PWD");
+	if (!pwd_el || !pwd_el->value)
+	{	
 		g_data.exit_status = 1;
+		ft_error(NULL, "pwd");
 	}
 	else
-		printf("%s\n", buf);
+		printf("%s\n", pwd_el->value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 12:42:21 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/19 13:54:39 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 14:21:07 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,13 +193,14 @@ t_builtin_t	is_builtin_or_not(char *str);
 void		ft_echo(char **argv, size_t count);
 void		ft_exit(char **argv, size_t count);
 int			ft_env(char **envp);
-void		ft_pwd(void);
+void		ft_pwd(t_exp_list **alst);
 void		ft_cd(char **argv, size_t count, t_exp_list **alst);
 void		ft_export(char **argv, size_t count, t_exp_list **alst);
 void		ft_unset(char **argv, size_t count, t_exp_list **alst);
 
+int			check_error(char *path, t_exp_list *pwd_el, char **ptr);
 char		*search_str(t_exp_list *list, char *key);
-void		new_exp_el(char *str, char *key, char *value, t_exp_list **alst);
+t_exp_list	*new_exp_el(char *str, char *key, char *value, t_exp_list **alst);
 t_exp_list	*search_el(t_exp_list *list, char *key);
 void		update_exp_el(char *str, char *value, t_exp_list *el, int dup);
 void		add_exp_to_list(t_exp_list *new, t_exp_list **list);
