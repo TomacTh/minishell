@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 12:14:17 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/19 19:12:51 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 01:24:14 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	update_pwd(t_exp_list *pwd_el)
 			builtin_error("cd", "error",
 				"getcwd: cannot access parent directories: ");
 			perror(0);
-			g_data.exit_status = 1;
 			return ;
 		}
 		fullstr = ft_strjoin("PWD=", buf);
@@ -69,20 +68,25 @@ void	update_pwd(t_exp_list *pwd_el)
 	}
 }
 
-/* void	handle_previous_dir(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
+int		verif_str(char *str)
 {
-	if (!path || (!pwd_el || !pwd_el->value))
-	{
-		builtin_error("cd", "error",
-				"cannot find previous dir");
-		g_data.exit_status = 1;
-		return ;
-	}
-	//if (path)
-	//{
+	int	countdots;
 
-	//}
-} */
+	countdots = 0;
+	if (*str != '.')
+		return (-1);
+	while(*str && (*str == '.' || *str == '/') && countdots < 3)
+	{
+		if (*str == '.')
+			++countdots;
+		else
+			countdots = 0;
+		str++;
+	}
+	if (*str || countdots > 2)
+		return (-1);
+	return (0);
+}
 
 void	chdir_check(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
 {
@@ -103,8 +107,6 @@ void	chdir_check(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
 		ptr = NULL;
 	else
 		ptr = buf;
-	//if (!ft_strcmp("../", path))
-		//return (handle_previous_dir(argv[1], buf, pwd_el));
 	update_oldpwd(oldpwd_el, pwd_el, ptr, NULL);
 	update_pwd(pwd_el);
 	update_my_env(&g_data.exp_list);
@@ -153,7 +155,7 @@ void	ft_cd(char **argv, size_t count, t_exp_list **alst)
 		g_data.exit_status = 1;
 		return ;
 	}
-	else if (count == 1 && home_el && home_el->value)
+	else if (count == 1)
 		chdir_check(home_el->value, pwd_el, oldpwd_el);
 	else if (count > 1)
 	{
