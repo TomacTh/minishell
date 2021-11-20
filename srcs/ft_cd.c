@@ -6,7 +6,7 @@
 /*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 12:14:17 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/20 14:20:41 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 15:04:25 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	chdir_check(char *path, t_exp_list *pwd_el, t_exp_list	*oldpwd_el)
 
 	res = check_error(path, pwd_el, &ptr);
 	if (res == 1 && chdir(path) == -1)
-	{	
+	{
 		ft_error(NULL, "cd");
 		g_data.exit_status = 1;
 		return ;

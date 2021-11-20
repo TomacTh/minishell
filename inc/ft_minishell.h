@@ -6,7 +6,7 @@
 /*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 12:42:21 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/20 14:21:07 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 15:12:04 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ int			is_quoted(char c);
 char		quote_value(char c);
 void		update_quote(char *quote, char *str_line, size_t *i);
 void		end_quote(char *quote, size_t *i);
+ssize_t		return_verifnewbuf(ssize_t len, char *buf, int previous);
 
 void		ft_bzero(void *s, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);

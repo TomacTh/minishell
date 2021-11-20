@@ -6,7 +6,7 @@
 /*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 14:19:20 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/20 14:20:40 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 15:10:55 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ ssize_t	get_new_join_path(char *path, t_exp_list *pwd_el, char *buf)
 	return (i);
 }
 
-ssize_t	verif_if_newbufvalid(char *buf, size_t len)
+ssize_t	verif_if_newbufvalid(char *buf, ssize_t len)
 {
 	int	countdots;
 	int	previous;
 
 	countdots = 0;
 	previous = 0;
-	while (len >= 0 && (buf[len] == '.' || buf[len] == '/'))
+	while (len > 0 && (buf[len] == '.' || buf[len] == '/'))
 	{	
 		if (buf[len] == '.')
 			++countdots;
@@ -71,17 +71,32 @@ ssize_t	verif_if_newbufvalid(char *buf, size_t len)
 			++previous;
 		--len;
 	}
-	if (previous)
+	return (return_verifnewbuf(len, buf, previous));
+}
+
+int	return_check_error(ssize_t len, char *buf, char *new_joinpath, char **ptr)
+{	
+	if (len > -1)
 	{
-		while (len >= 0 && previous)
-		{
-			while (len >= 0 && buf[len] != '/')
-				--len;
-			--previous;
-		}
-		return (len);
+		new_joinpath = ft_strndup(buf, len);
+		if (!new_joinpath)
+			ft_quit(1, NULL, "malloc error");
+		if (chdir(new_joinpath) == -1)
+			len = -1;
+		free(new_joinpath);
 	}
-	return (-1);
+	if (len == -1)
+	{
+		builtin_error("cd", "error",
+			"getcwd: cannot access parent directories: ");
+		perror(0);
+		return (3);
+	}
+	else
+	{
+		*ptr = new_joinpath;
+		return (2);
+	}
 }
 
 int	check_error(char *path, t_exp_list *pwd_el, char **ptr)
@@ -100,27 +115,7 @@ int	check_error(char *path, t_exp_list *pwd_el, char **ptr)
 		{
 			len = get_new_join_path(path, pwd_el, buf);
 			len = verif_if_newbufvalid(buf, --len);
-			if (len > -1)
-			{
-				new_joinpath = ft_strndup(buf, len);
-				if (!new_joinpath)
-					ft_quit(1, NULL, "malloc error");
-				if (chdir(new_joinpath) == -1)
-					len = -1;
-				free(new_joinpath);
-			}
-			if (len == -1)
-			{
-				builtin_error("cd", "error",
-					"getcwd: cannot access parent directories: ");
-				perror(0);
-				return (3);
-			}
-			else
-			{
-				*ptr = new_joinpath;
-				return (2);
-			}
+			return (return_check_error(len, buf, new_joinpath, ptr));
 		}
 	}
 	return (1);

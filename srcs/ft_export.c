@@ -6,7 +6,7 @@
 /*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 00:37:58 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/20 13:02:10 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 15:25:38 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	export_loop(char **argv, size_t count, t_exp_list **alst, int *change)
 		{
 			el = search_el(*alst, key);
 			if (!el)
-				new_exp_el(argv[i], key, value, alst);
+				el = new_exp_el(argv[i], key, value, alst);
 			else
 			{
 				free(key);
