@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_word.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 16:00:59 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/19 00:01:58 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/20 17:28:06 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,11 @@ int	break_in_words(char *str, int *i, t_word_list **alst)
 	else if (str[*i])
 	{
 		if (!new_word(str, i, alst))
+		{
+			ft_error("minishell: not support unclosed pipes\n", NULL);
+			g_data.exit_status = 1;
 			return (1);
+		}
 		return (break_in_words(str, i, alst));
 	}
 	return (0);
