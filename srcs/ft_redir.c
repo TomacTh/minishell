@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcharvet <tcharvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcharvet <tcharvet@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 18:02:33 by tcharvet          #+#    #+#             */
-/*   Updated: 2021/11/20 15:11:15 by tcharvet         ###   ########.fr       */
+/*   Updated: 2021/11/25 22:14:54 by tcharvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ ssize_t	return_verifnewbuf(ssize_t len, char *buf, int previous)
 	if (previous)
 	{
 		while (len >= 0 && previous)
-		{	
-			if (buf[len] == '/' & len > 0)
+		{
+			if (buf[len] == '/' && len > 0)
 				--len;
 			while (len > 0 && buf[len] != '/')
 				--len;
